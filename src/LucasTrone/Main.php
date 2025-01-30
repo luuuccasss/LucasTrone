@@ -2,9 +2,10 @@
 
 namespace LucasTrone;
 
-use LucasTrone\Commands\TroneCommand;
-use LucasTrone\Events\PlayerMoveListener;
 use pocketmine\plugin\PluginBase;
+use LucasTrone\Commands\TroneCommand;
+use LucasTrone\Events\BlockBreakListener;
+use LucasTrone\Events\PlayerMoveListener;
 
 class Main extends PluginBase {
 
@@ -14,15 +15,17 @@ class Main extends PluginBase {
     /** @var Config $config */
     private $config;
 
+    /** @var array $selectingPlayers */
+    private $selectingPlayers = [];
+
     public function onEnable(): void {
         $this->saveDefaultConfig();
         $this->config = $this->getConfig();
         $this->zone = $this->config->get("zone", []);
 
-        // Enregistrer la commande
         $this->getServer()->getCommandMap()->register("lucastrone", new TroneCommand($this));
 
-        // Enregistrer l'événement
+        $this->getServer()->getPluginManager()->registerEvents(new BlockBreakListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents(new PlayerMoveListener($this), $this);
     }
 
@@ -52,5 +55,17 @@ class Main extends PluginBase {
         $maxZ = max($point1["z"], $point2["z"]);
 
         return $x >= $minX && $x <= $maxX && $y >= $minY && $y <= $maxY && $z >= $minZ && $z <= $maxZ;
+    }
+
+    public function addSelectingPlayer(Player $player): void {
+        $this->selectingPlayers[$player->getName()] = true;
+    }
+
+    public function isSelectingPlayer(Player $player): bool {
+        return isset($this->selectingPlayers[$player->getName()]);
+    }
+
+    public function removeSelectingPlayer(Player $player): void {
+        unset($this->selectingPlayers[$player->getName()]);
     }
 }

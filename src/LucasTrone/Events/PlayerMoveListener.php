@@ -25,8 +25,8 @@ class PlayerMoveListener implements Listener {
         $pos = $player->getPosition();
 
         if ($this->plugin->isInZone($pos->getX(), $pos->getY(), $pos->getZ())) {
-            $this->economyAPI->addMoney($player, 10);
-            $player->sendMessage("§aVous gagnez de l'argent en restant dans la zone du trône !");
+            $this->economyAPI->addMoney($player, 10); // Ajouter 10 unités d'argent
+            $player->sendPopup("§aVous gagnez de l'argent en restant dans la zone du trône !");
         }
     }
 }

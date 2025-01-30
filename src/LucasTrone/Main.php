@@ -2,9 +2,9 @@
 
 namespace LucasTrone;
 
-use pocketmine\plugin\PluginBase;
 use LucasTrone\Commands\TroneCommand;
 use LucasTrone\Events\PlayerMoveListener;
+use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase {
 

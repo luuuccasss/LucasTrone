@@ -2,10 +2,10 @@
 
 namespace LucasTrone\Commands;
 
+use LucasTrone\Main;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
-use LucasTrone\Main;
 
 class TroneCommand extends Command {
 

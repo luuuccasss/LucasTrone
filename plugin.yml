@@ -1,0 +1,10 @@
+name: LucasTrone
+version: 1.0.0
+main: LucasTrone\Main
+api: 5.0.0
+
+
+permissions:
+  lucastrone.set:
+    description: "/trone"
+    default: op

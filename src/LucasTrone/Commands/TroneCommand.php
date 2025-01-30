@@ -15,6 +15,7 @@ class TroneCommand extends Command {
     public function __construct(Main $plugin) {
         parent::__construct("trone", "Définir la zone du trône", "/trone <set1|set2>");
         $this->plugin = $plugin;
+        $this->setPermission("lucastrone.trone");
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {

@@ -3,6 +3,7 @@
 namespace LucasTrone;
 
 use pocketmine\plugin\PluginBase;
+use pocketmine\player\Player;
 use LucasTrone\Commands\TroneCommand;
 use LucasTrone\Events\BlockBreakListener;
 use LucasTrone\Events\PlayerMoveListener;
@@ -23,8 +24,10 @@ class Main extends PluginBase {
         $this->config = $this->getConfig();
         $this->zone = $this->config->get("zone", []);
 
+        // Enregistrer la commande
         $this->getServer()->getCommandMap()->register("lucastrone", new TroneCommand($this));
 
+        // Enregistrer les événements
         $this->getServer()->getPluginManager()->registerEvents(new BlockBreakListener($this), $this);
         $this->getServer()->getPluginManager()->registerEvents(new PlayerMoveListener($this), $this);
     }

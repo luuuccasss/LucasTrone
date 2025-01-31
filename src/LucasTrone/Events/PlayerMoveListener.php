@@ -11,12 +11,8 @@ class PlayerMoveListener implements Listener {
     /** @var Main $plugin */
     private $plugin;
 
-    /** @var LucasEconomyAPI $economyAPI */
-    private $economyAPI;
-
     public function __construct(Main $plugin) {
         $this->plugin = $plugin;
-        $this->economyAPI = new LucasEconomyAPI($plugin->getServer()->getPluginManager()->getPlugin("LucasEconomy"));
     }
 
     public function onPlayerMove(PlayerMoveEvent $event): void {

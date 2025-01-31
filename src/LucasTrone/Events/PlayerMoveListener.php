@@ -24,7 +24,6 @@ class PlayerMoveListener implements Listener
         if ($this->plugin->isInZone($pos->getX(), $pos->getY(), $pos->getZ())) {
             if (!$this->plugin->isPlayerInZone($player)) {
                 $this->plugin->setPlayerInZone($player);
-
                 if ($this->plugin->canSendMessage($player)) {
                     $this->plugin->getServer()->broadcastMessage($this->plugin->getMessage("trone_enter", [
                         "player" => $player->getName(),
@@ -34,10 +33,11 @@ class PlayerMoveListener implements Listener
         } else {
             if ($this->plugin->isPlayerInZone($player)) {
                 $this->plugin->setPlayerLeftZone($player);
-
-                $this->plugin->getServer()->broadcastMessage($this->plugin->getMessage("trone_leave", [
-                    "player" => $player->getName(),
-                ]));
+                if ($this->plugin->canSendLeaveMessage($player)) {
+                    $this->plugin->getServer()->broadcastMessage($this->plugin->getMessage("trone_leave", [
+                        "player" => $player->getName(),
+                    ]));
+                }
             }
         }
     }

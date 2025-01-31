@@ -19,6 +19,7 @@ class Main extends PluginBase {
     private int $messageCooldown;
     private array $inZonePlayers = [];
     private array $lastMessageTimestamps = [];
+    private array $lastLeaveTimestamps = [];
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
@@ -104,6 +105,24 @@ class Main extends PluginBase {
 
         return false;
     }
+
+    public function canSendLeaveMessage(Player $player): bool {
+        $name = $player->getName();
+        $now = time();
+
+        if (!isset($this->lastLeaveTimestamps[$name])) {
+            $this->lastLeaveTimestamps[$name] = $now;
+            return true;
+        }
+
+        if ($now - $this->lastLeaveTimestamps[$name] >= $this->messageCooldown) {
+            $this->lastLeaveTimestamps[$name] = $now;
+            return true;
+        }
+
+        return false;
+    }
+
     public function setPlayerInZone(Player $player): void {
         $this->inZonePlayers[$player->getName()] = true;
     }

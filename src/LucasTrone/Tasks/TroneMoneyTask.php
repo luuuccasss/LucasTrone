@@ -1,4 +1,5 @@
 <?php
+
 namespace LucasTrone\Tasks;
 
 use pocketmine\scheduler\Task;

@@ -7,6 +7,7 @@ use pocketmine\player\Player;
 use LucasTrone\Commands\TroneCommand;
 use LucasTrone\Events\BlockBreakListener;
 use LucasTrone\Events\PlayerMoveListener;
+use LucasTrone\Tasks\TroneMoneyTask;
 
 class Main extends PluginBase {
 
@@ -19,8 +20,14 @@ class Main extends PluginBase {
     /** @var array $selectingPlayers */
     private $selectingPlayers = [];
 
+    /** @var array $messages */
     private array $messages = [];
 
+    /** @var int $moneyPerInterval */
+    private int $moneyPerInterval;
+
+    /** @var int $intervalSeconds */
+    private int $intervalSeconds;
 
     public function onEnable(): void {
         $this->saveDefaultConfig();
@@ -28,10 +35,13 @@ class Main extends PluginBase {
         $this->zone = $this->config->get("zone", []);
         $this->messages = $this->getConfig()->get("messages", []);
 
-
+        //Settings
         $this->moneyPerInterval = $this->getConfig()->getNested("settings.money_per_interval", 10);
         $this->intervalSeconds = $this->getConfig()->getNested("settings.interval_seconds", 5);
+
+        //Task
         $this->getScheduler()->scheduleRepeatingTask(new TroneMoneyTask($this), $this->intervalSeconds * 20);
+
         // Enregistrer la commande
         $this->getServer()->getCommandMap()->register("lucastrone", new TroneCommand($this));
 
@@ -93,5 +103,13 @@ class Main extends PluginBase {
 
     public function removeSelectingPlayer(Player $player): void {
         unset($this->selectingPlayers[$player->getName()]);
+    }
+
+    public function getMoneyPerInterval(): int {
+        return $this->moneyPerInterval;
+    }
+
+    public function getIntervalSeconds(): int {
+        return $this->intervalSeconds;
     }
 }

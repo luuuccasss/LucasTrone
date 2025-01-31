@@ -2,6 +2,7 @@ zone: []
 
 messages:
   trone_enter: "§a[Trône] {player} est maintenant sur le trône !"
+  trone_leave: "§a[Trône] {player} a quitté le trône."
   trone_money: "§aVous gagnez de l'argent en restant dans la zone du trône !"
   point1_set: "§aPoint 1 défini à {x}, {y}, {z}."
   point2_set: "§aPoint 2 défini à {x}, {y}, {z}."

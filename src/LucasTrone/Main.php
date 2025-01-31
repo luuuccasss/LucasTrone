@@ -19,11 +19,19 @@ class Main extends PluginBase {
     /** @var array $selectingPlayers */
     private $selectingPlayers = [];
 
+    private array $messages = [];
+
+
     public function onEnable(): void {
         $this->saveDefaultConfig();
         $this->config = $this->getConfig();
         $this->zone = $this->config->get("zone", []);
+        $this->messages = $this->getConfig()->get("messages", []);
 
+
+        $this->moneyPerInterval = $this->getConfig()->getNested("settings.money_per_interval", 10);
+        $this->intervalSeconds = $this->getConfig()->getNested("settings.interval_seconds", 5);
+        $this->getScheduler()->scheduleRepeatingTask(new TroneMoneyTask($this), $this->intervalSeconds * 20);
         // Enregistrer la commande
         $this->getServer()->getCommandMap()->register("lucastrone", new TroneCommand($this));
 
@@ -65,6 +73,14 @@ class Main extends PluginBase {
         $maxZ = max($point1["z"], $point2["z"]);
 
         return $x >= $minX && $x <= $maxX && $y >= $minY && $y <= $maxY && $z >= $minZ && $z <= $maxZ;
+    }
+
+    public function getMessage(string $key, array $replacements = []): string {
+        $message = $this->messages[$key] ?? "§cMessage non trouvé : " . $key;
+        foreach ($replacements as $placeholder => $value) {
+            $message = str_replace("{" . $placeholder . "}", $value, $message);
+        }
+        return $message;
     }
 
     public function addSelectingPlayer(Player $player): void {

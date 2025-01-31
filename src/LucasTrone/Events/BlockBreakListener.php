@@ -26,28 +26,28 @@ class BlockBreakListener implements Listener {
 
             $zone = $this->plugin->getZone();
 
-            $player->sendMessage("§eDebug: Zone actuelle: " . print_r($zone, true));
-
             if (!isset($zone["point1"])) {
                 $this->plugin->setZonePoint(1, $pos->getX(), $pos->getY(), $pos->getZ());
-                $player->sendMessage("§aPoint 1 défini à " . $pos->getX() . ", " . $pos->getY() . ", " . $pos->getZ());
-                $player->sendMessage("§aTapez un autre bloc pour définir le point 2.");
-
-                $zone = $this->plugin->getZone();
-                $player->sendMessage("§eDebug: Zone après définition du point 1: " . print_r($zone, true));
+                $player->sendMessage($this->plugin->getMessage("point1_set", [
+                    "x" => $pos->getX(),
+                    "y" => $pos->getY(),
+                    "z" => $pos->getZ(),
+                ]));
+                $player->sendMessage($this->plugin->getMessage("point2_set"));
             }
             elseif (!isset($zone["point2"])) {
                 $this->plugin->setZonePoint(2, $pos->getX(), $pos->getY(), $pos->getZ());
-                $player->sendMessage("§aPoint 2 défini à " . $pos->getX() . ", " . $pos->getY() . ", " . $pos->getZ());
-                $player->sendPopup("§aLa zone du trône est définie.");
+                $player->sendMessage($this->plugin->getMessage("point2_set", [
+                    "x" => $pos->getX(),
+                    "y" => $pos->getY(),
+                    "z" => $pos->getZ(),
+                ]));
+                $player->sendPopup($this->plugin->getMessage("zone_defined"));
 
                 $this->plugin->removeSelectingPlayer($player);
-
-                $zone = $this->plugin->getZone();
-                $player->sendMessage("§eDebug: Zone après définition du point 2: " . print_r($zone, true));
             }
             else {
-                $player->sendMessage("§cLes deux points sont déjà définis.");
+                $player->sendMessage($this->plugin->getMessage("already_defined"));
             }
         }
     }

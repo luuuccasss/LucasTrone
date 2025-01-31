@@ -1,1 +1,15 @@
 zone: []
+
+messages:
+  trone_enter: "§a[Trône] {player} est maintenant sur le trône !"
+  trone_money: "§aVous gagnez de l'argent en restant dans la zone du trône !"
+  point1_set: "§aPoint 1 défini à {x}, {y}, {z}."
+  point2_set: "§aPoint 2 défini à {x}, {y}, {z}."
+  zone_defined: "§aLa zone du trône est définie."
+  zone_removed: "§aLa zone du trône a été supprimée."
+  usage: "Usage: /trone <set|remove>"
+  already_defined: "§cLes deux points sont déjà définis."
+
+settings:
+  money_per_interval: 10
+  interval_seconds: 5

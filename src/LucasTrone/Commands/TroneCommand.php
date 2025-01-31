@@ -26,23 +26,23 @@ class TroneCommand extends Command {
         }
 
         if (!isset($args[0])) {
-            $sender->sendMessage("Usage: /trone <set|remove>");
+            $sender->sendMessage($this->plugin->getMessage("usage"));
             return true;
         }
 
         switch ($args[0]) {
             case "set":
                 $this->plugin->addSelectingPlayer($sender);
-                $sender->sendMessage("§aTapez un bloc pour définir le point 1 de la zone.");
+                $sender->sendMessage($this->plugin->getMessage("point1_set"));
                 break;
 
             case "remove":
                 $this->plugin->removeZone();
-                $sender->sendMessage("§aLa zone du trône a été supprimée.");
+                $sender->sendMessage($this->plugin->getMessage("zone_removed"));
                 break;
 
             default:
-                $sender->sendMessage("Usage: /trone <set|remove>");
+                $sender->sendMessage($this->plugin->getMessage("usage"));
                 break;
         }
 

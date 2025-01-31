@@ -36,6 +36,13 @@ class Main extends PluginBase {
         return $this->zone;
     }
 
+    public function removeZone(): void {
+        $this->getConfig()->set("zone", null);
+        $this->getConfig()->save();
+
+        $this->zone = [];
+    }
+
     public function setZonePoint(int $point, float $x, float $y, float $z): void {
         $this->zone["point$point"] = ["x" => $x, "y" => $y, "z" => $z];
         $this->config->set("zone", $this->zone);

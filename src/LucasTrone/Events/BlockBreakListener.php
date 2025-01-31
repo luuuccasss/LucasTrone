@@ -9,6 +9,7 @@ use LucasTrone\Main;
 
 class BlockBreakListener implements Listener {
 
+    /** @var Main $plugin */
     private $plugin;
 
     public function __construct(Main $plugin) {
@@ -24,7 +25,8 @@ class BlockBreakListener implements Listener {
             $pos = $block->getPosition();
 
             $zone = $this->plugin->getZone();
-            $player->sendMessage("§eDebug: Zone avant modification: " . print_r($zone, true));
+
+            $player->sendMessage("§eDebug: Zone actuelle: " . print_r($zone, true));
 
             if (!isset($zone["point1"])) {
                 $this->plugin->setZonePoint(1, $pos->getX(), $pos->getY(), $pos->getZ());
@@ -33,14 +35,19 @@ class BlockBreakListener implements Listener {
 
                 $zone = $this->plugin->getZone();
                 $player->sendMessage("§eDebug: Zone après définition du point 1: " . print_r($zone, true));
-            } else {
+            }
+            elseif (!isset($zone["point2"])) {
                 $this->plugin->setZonePoint(2, $pos->getX(), $pos->getY(), $pos->getZ());
                 $player->sendMessage("§aPoint 2 défini à " . $pos->getX() . ", " . $pos->getY() . ", " . $pos->getZ());
-                $player->sendPopup("§aLa zone du trone est set.");
+                $player->sendPopup("§aLa zone du trône est définie.");
+
                 $this->plugin->removeSelectingPlayer($player);
 
                 $zone = $this->plugin->getZone();
                 $player->sendMessage("§eDebug: Zone après définition du point 2: " . print_r($zone, true));
+            }
+            else {
+                $player->sendMessage("§cLes deux points sont déjà définis.");
             }
         }
     }

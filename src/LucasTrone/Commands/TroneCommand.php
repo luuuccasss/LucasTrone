@@ -13,7 +13,7 @@ class TroneCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("trone", "Définir la zone du trône", "/trone set");
+        parent::__construct("trone", "Définir ou supprimer la zone du trône", "/trone <set|remove>");
         $this->setPermission("lucastrone.set");
 
         $this->plugin = $plugin;
@@ -25,12 +25,27 @@ class TroneCommand extends Command {
             return true;
         }
 
-        if (isset($args[0]) && $args[0] === "set") {
-            $this->plugin->addSelectingPlayer($sender);
-            $sender->sendMessage("Tapez un bloc pour définir le point 1 de la zone.");
-        } else {
-            $sender->sendMessage("Usage: /trone set");
+        if (!isset($args[0])) {
+            $sender->sendMessage("Usage: /trone <set|remove>");
+            return true;
         }
+
+        switch ($args[0]) {
+            case "set":
+                $this->plugin->addSelectingPlayer($sender);
+                $sender->sendMessage("§aTapez un bloc pour définir le point 1 de la zone.");
+                break;
+
+            case "remove":
+                $this->plugin->removeZone();
+                $sender->sendMessage("§aLa zone du trône a été supprimée.");
+                break;
+
+            default:
+                $sender->sendMessage("Usage: /trone <set|remove>");
+                break;
+        }
+
         return true;
     }
 }

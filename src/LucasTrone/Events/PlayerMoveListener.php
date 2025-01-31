@@ -6,12 +6,14 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerMoveEvent;
 use LucasTrone\Main;
 
-class PlayerMoveListener implements Listener {
+class PlayerMoveListener implements Listener
+{
 
     /** @var Main $plugin */
     private $plugin;
 
-    public function __construct(Main $plugin) {
+    public function __construct(Main $plugin)
+    {
         $this->plugin = $plugin;
     }
 
@@ -20,9 +22,23 @@ class PlayerMoveListener implements Listener {
         $pos = $player->getPosition();
 
         if ($this->plugin->isInZone($pos->getX(), $pos->getY(), $pos->getZ())) {
-            $this->plugin->getServer()->broadcastMessage($this->plugin->getMessage("trone_enter", [
-                "player" => $player->getName(),
-            ]));
+            if (!$this->plugin->isPlayerInZone($player)) {
+                $this->plugin->setPlayerInZone($player);
+
+                if ($this->plugin->canSendMessage($player)) {
+                    $this->plugin->getServer()->broadcastMessage($this->plugin->getMessage("trone_enter", [
+                        "player" => $player->getName(),
+                    ]));
+                }
+            }
+        } else {
+            if ($this->plugin->isPlayerInZone($player)) {
+                $this->plugin->setPlayerLeftZone($player);
+
+                $this->plugin->getServer()->broadcastMessage($this->plugin->getMessage("trone_leave", [
+                    "player" => $player->getName(),
+                ]));
+            }
         }
     }
 }

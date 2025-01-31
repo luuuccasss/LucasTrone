@@ -13,3 +13,4 @@ messages:
 settings:
   money_per_interval: 10
   interval_seconds: 5
+  message_cooldown: 10

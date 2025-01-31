@@ -65,7 +65,7 @@ class Main extends PluginBase {
         return $x >= $minX && $x <= $maxX && $y >= $minY && $y <= $maxY && $z >= $minZ && $z <= $maxZ;
     }
     public function getMessage(string $key, array $replacements = []): string {
-        $message = $this->messages[$key] ?? "§cMessage non trouvé : " . $key;
+        $message = $this->messages[$key] ?? "§cMessage not found : " . $key;
         foreach ($replacements as $placeholder => $value) {
             $message = str_replace("{" . $placeholder . "}", $value, $message);
         }

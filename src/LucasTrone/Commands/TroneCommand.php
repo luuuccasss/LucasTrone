@@ -13,7 +13,7 @@ class TroneCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("trone", "Définir ou supprimer la zone du trône", "/trone <set|remove>");
+        parent::__construct("trone", "Define or delete the throne zone", "/trone <set|remove>");
         $this->setPermission("lucastrone.set");
 
         $this->plugin = $plugin;
@@ -21,7 +21,7 @@ class TroneCommand extends Command {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (!$sender instanceof Player) {
-            $sender->sendMessage("Cette commande doit être exécutée par un joueur.");
+            $sender->sendMessage("Only player can use this command.");
             return true;
         }
 

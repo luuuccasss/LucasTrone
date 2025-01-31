@@ -2,6 +2,10 @@ name: LucasTrone
 version: 1.0.0
 main: LucasTrone\Main
 api: 5.0.0
+author: luuuccasss
+
+depend:
+  - LucasEconomy
 
 
 permissions:
